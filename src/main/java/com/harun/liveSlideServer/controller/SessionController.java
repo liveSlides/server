@@ -41,9 +41,8 @@ public class SessionController {
 
     @MessageMapping("/getParticipants")
     public void getParticipants(SessionParticipantsRequest request) {
-        System.out.println("Participant Request geldi :" + request);
+        System.out.println(request);
         SessionParticipantsResponse response = sessionService.getParticipants(request);
-        System.out.println("Response : " + response);
-        messagingTemplate.convertAndSend("/topic/getParticipants", response);
+        messagingTemplate.convertAndSend("/topic/getParticipants/" + request.getSessionId()  + "/" + request.getUserID(), response);
     }
 }
