@@ -4,8 +4,6 @@ import com.harun.liveSlideServer.dto.*;
 import com.harun.liveSlideServer.enums.UserType;
 import com.harun.liveSlideServer.model.Participant;
 import com.harun.liveSlideServer.model.Session;
-import com.harun.liveSlideServer.exception.SessionAlreadyExistException;
-import com.harun.liveSlideServer.exception.SessionIsNotExistException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,7 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
+
 
 @Service
 public class SessionService {
@@ -55,5 +53,23 @@ public class SessionService {
 
     public Session getSession (String sessionId){
         return sessions.get(sessionId);
+    }
+
+    public DisconnectResponse disconnect(DisconnectRequest request) {
+        Session session = sessions.get(request.getSessionID());
+        if (session != null && session.getParticipants().containsKey(request.getUserID())) {
+            session.getParticipants().remove(request.getUserID());
+
+            if (session.getParticipants().isEmpty())
+                closeSession(session.getSessionID());
+
+            return new DisconnectResponse(ResponseStatus.SUCCESS);
+        } else {
+            return new DisconnectResponse(ResponseStatus.ERROR);
+        }
+    }
+
+    private void closeSession(String sessionID) {
+        sessions.remove(sessionID);
     }
 }

@@ -45,4 +45,11 @@ public class SessionController {
         SessionParticipantsResponse response = sessionService.getParticipants(request);
         messagingTemplate.convertAndSend("/topic/getParticipants/" + request.getSessionId()  + "/" + request.getUserID(), response);
     }
+
+    @MessageMapping("/disconnect")
+    public void disconnect(DisconnectRequest request) {
+        System.out.println(request);
+        DisconnectResponse response = sessionService.disconnect(request);
+        messagingTemplate.convertAndSend("/topic/disconnect/" + request.getSessionID()  + "/" + request.getUserID(), response);
+    }
 }
