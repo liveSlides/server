@@ -7,6 +7,10 @@ public class Participant {
     private String name;
     private UserType userType;
 
+    public Participant() {
+
+    }
+
     public Participant(String userID, String name, UserType userType) {
         this.userID = userID;
         this.name = name;

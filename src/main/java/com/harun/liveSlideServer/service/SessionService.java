@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -42,11 +43,14 @@ public class SessionService {
         return new SessionInitialResponse(request.getSessionID(), ResponseStatus.SUCCESS, SessionInitializeType.JOIN, session.getCreationTime());
     }
 
-    public Set<String> getParticipants (String sessionId){
+    public SessionParticipantsResponse getParticipants(SessionParticipantsRequest request) {
+        Set<Participant> participants = getParticipantObjects(request.getSessionId());
+        return new SessionParticipantsResponse(request.getSessionId(), participants);
+    }
+
+    private Set<Participant> getParticipantObjects(String sessionId) {
         Session session = sessions.get(sessionId);
-        return session != null ? session.getParticipants().values().stream()
-                .map(Participant::getName)
-                .collect(Collectors.toSet()) : Set.of();
+        return session != null ? new HashSet<>(session.getParticipants().values()) : Set.of();
     }
 
     public Session getSession (String sessionId){
