@@ -1,10 +1,16 @@
 package com.harun.liveSlideServer.dto;
 
 public class SessionJoinRequest {
+    private String userID;
     private String sessionID;
     private String participantName;
 
-    public SessionJoinRequest(String sessionID, String participantName) {
+    public SessionJoinRequest() {
+
+    }
+
+    public SessionJoinRequest(String userID , String sessionID, String participantName) {
+        this.userID = userID;
         this.sessionID = sessionID;
         this.participantName = participantName;
     }
@@ -23,5 +29,13 @@ public class SessionJoinRequest {
 
     public void setParticipantName(String participantName) {
         this.participantName = participantName;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

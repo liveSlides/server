@@ -1,36 +1,55 @@
 package com.harun.liveSlideServer.service;
 
-import com.harun.liveSlideServer.dto.SessionCreationRequest;
-import com.harun.liveSlideServer.dto.SessionJoinRequest;
+import com.harun.liveSlideServer.dto.*;
+import com.harun.liveSlideServer.enums.UserType;
+import com.harun.liveSlideServer.model.Participant;
+import com.harun.liveSlideServer.model.Session;
 import com.harun.liveSlideServer.exception.SessionAlreadyExistException;
 import com.harun.liveSlideServer.exception.SessionIsNotExistException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class SessionService {
-    private final Map<String, Set<String>> sessions = new HashMap<>();
+    private final Map<String, Session> sessions = new HashMap<>();
 
-    public void createSession(SessionCreationRequest info) throws SessionAlreadyExistException {
-        if (sessions.containsKey(info.getSessionID()))
-            throw new SessionAlreadyExistException();
+    public SessionInitialResponse createSession(SessionCreationRequest request) {
+        if (sessions.containsKey(request.getSessionID()))
+            return new SessionInitialResponse("", ResponseStatus.ERROR, SessionInitializeType.HOST, LocalDateTime.now());
 
-        sessions.putIfAbsent(info.getSessionID(), new HashSet<>());
-        sessions.getOrDefault(info.getSessionID(), new HashSet<>()).add(info.getHostName());
+        LocalDateTime creationTime = LocalDateTime.now();
+        Session newSession = new Session(request.getSessionID(), creationTime);
+        newSession.getParticipants().put(request.getUserID(),
+                new Participant(request.getUserID(), request.getHostName(), UserType.HOST_PRESENTER));
+        sessions.put(request.getSessionID(), newSession);
+
+        return new SessionInitialResponse(request.getSessionID(), ResponseStatus.SUCCESS, SessionInitializeType.HOST, creationTime);
     }
 
-    public void joinSession(SessionJoinRequest info) throws SessionIsNotExistException {
-        if (!sessions.containsKey(info.getSessionID()))
-            throw new SessionIsNotExistException();
+    public SessionInitialResponse joinSession (SessionJoinRequest request){
+        if (!sessions.containsKey(request.getSessionID()))
+            return new SessionInitialResponse("", ResponseStatus.ERROR, SessionInitializeType.JOIN, LocalDateTime.now());
 
-        sessions.getOrDefault(info.getSessionID(), new HashSet<>()).add(info.getParticipantName());
+        Session session = sessions.get(request.getSessionID());
+        session.getParticipants().put(request.getUserID(),
+                new Participant(request.getUserID(), request.getParticipantName(), UserType.PARTICIPANT_SPECTATOR));
+
+        return new SessionInitialResponse(request.getSessionID(), ResponseStatus.SUCCESS, SessionInitializeType.JOIN, session.getCreationTime());
     }
 
-    public Set<String> getParticipants(String sessionId) {
-        return sessions.getOrDefault(sessionId, new HashSet<>());
+    public Set<String> getParticipants (String sessionId){
+        Session session = sessions.get(sessionId);
+        return session != null ? session.getParticipants().values().stream()
+                .map(Participant::getName)
+                .collect(Collectors.toSet()) : Set.of();
+    }
+
+    public Session getSession (String sessionId){
+        return sessions.get(sessionId);
     }
 }

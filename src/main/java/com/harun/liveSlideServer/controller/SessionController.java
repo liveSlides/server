@@ -7,6 +7,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+
 @Controller
 public class SessionController {
     private SessionService sessionService;
@@ -18,31 +20,17 @@ public class SessionController {
 
     @MessageMapping("/startSession")
     @SendTo("/topic/sessionStatus")
-    public SessionInitialResponse startSession(SessionCreationRequest info) {
-        System.out.println(info);
-        try {
-            sessionService.createSession(info);
-            System.out.println("Session is created : " + info.getSessionID());
-            System.out.println("Host : " + info.getHostName());
-            return new SessionInitialResponse(info.getSessionID(), ResponseStatus.SUCCESS , SessionInitializeType.HOST);
-        }
-        catch (Exception e) {
-            return new SessionInitialResponse("", ResponseStatus.ERROR , SessionInitializeType.HOST);
-        }
+    public SessionInitialResponse startSession(SessionCreationRequest request) {
+        System.out.println(request);
+        SessionInitialResponse res = sessionService.createSession(request);
+        System.out.println(res);
+        return res;
     }
 
     @MessageMapping("/joinSession")
     @SendTo("/topic/sessionStatus")
-    public SessionInitialResponse joinSession(SessionJoinRequest info) {
-        System.out.println(info);
-        try {
-            sessionService.joinSession(info);
-            System.out.println("A user joined to session : " + info.getSessionID());
-            System.out.println("Participant : " + info.getParticipantName());
-            return new SessionInitialResponse(info.getSessionID(), ResponseStatus.SUCCESS, SessionInitializeType.JOIN);
-        }
-        catch (Exception e) {
-            return new SessionInitialResponse(info.getSessionID(), ResponseStatus.ERROR, SessionInitializeType.JOIN);
-        }
+    public SessionInitialResponse joinSession(SessionJoinRequest request) {
+        System.out.println(request);
+        return sessionService.joinSession(request);
     }
 }
