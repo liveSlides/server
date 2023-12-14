@@ -8,6 +8,7 @@ public class Session {
     private String sessionID;
     private Map<String, Participant> participants;
     private LocalDateTime creationTime;
+    private String currentFileName;
 
     public Session(String sessionID , LocalDateTime creationTime) {
         this.sessionID = sessionID;
@@ -26,5 +27,13 @@ public class Session {
 
     public LocalDateTime getCreationTime() {
         return creationTime;
+    }
+
+    public String getCurrentFileName() {
+        return currentFileName;
+    }
+
+    public void setCurrentFileName(String currentFileName) {
+        this.currentFileName = currentFileName;
     }
 }

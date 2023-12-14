@@ -1,11 +1,15 @@
 package com.harun.liveSlideServer.service;
 
+import com.harun.liveSlideServer.db.SessionsDatabase;
 import com.harun.liveSlideServer.dto.*;
 import com.harun.liveSlideServer.enums.UserType;
 import com.harun.liveSlideServer.model.Participant;
 import com.harun.liveSlideServer.model.Session;
+import com.harun.liveSlideServer.util.FolderDeleter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,26 +19,31 @@ import java.util.Set;
 
 @Service
 public class SessionService {
-    private final Map<String, Session> sessions = new HashMap<>();
+    public SessionsDatabase database;
+
+    @Autowired
+    public SessionService(SessionsDatabase database) {
+        this.database =  database;
+    }
 
     public SessionInitialResponse createSession(SessionCreationRequest request) {
-        if (sessions.containsKey(request.getSessionID()))
+        if (database.sessions.containsKey(request.getSessionID()))
             return new SessionInitialResponse("", ResponseStatus.ERROR, SessionInitializeType.HOST, LocalDateTime.now());
 
         LocalDateTime creationTime = LocalDateTime.now();
         Session newSession = new Session(request.getSessionID(), creationTime);
         newSession.getParticipants().put(request.getUserID(),
                 new Participant(request.getUserID(), request.getHostName(), UserType.HOST_PRESENTER));
-        sessions.put(request.getSessionID(), newSession);
+        database.sessions.put(request.getSessionID(), newSession);
 
         return new SessionInitialResponse(request.getSessionID(), ResponseStatus.SUCCESS, SessionInitializeType.HOST, creationTime);
     }
 
     public SessionInitialResponse joinSession (SessionJoinRequest request){
-        if (!sessions.containsKey(request.getSessionID()))
+        if (!database.sessions.containsKey(request.getSessionID()))
             return new SessionInitialResponse("", ResponseStatus.ERROR, SessionInitializeType.JOIN, LocalDateTime.now());
 
-        Session session = sessions.get(request.getSessionID());
+        Session session = database.sessions.get(request.getSessionID());
         session.getParticipants().put(request.getUserID(),
                 new Participant(request.getUserID(), request.getParticipantName(), UserType.PARTICIPANT_SPECTATOR));
 
@@ -47,21 +56,24 @@ public class SessionService {
     }
 
     private Set<Participant> getParticipantObjects(String sessionId) {
-        Session session = sessions.get(sessionId);
+        Session session = database.sessions.get(sessionId);
         return session != null ? new HashSet<>(session.getParticipants().values()) : Set.of();
     }
 
     public Session getSession (String sessionId){
-        return sessions.get(sessionId);
+        return database.sessions.get(sessionId);
     }
 
     public DisconnectResponse disconnect(DisconnectRequest request) {
-        Session session = sessions.get(request.getSessionID());
+        Session session = database.sessions.get(request.getSessionID());
         if (session != null && session.getParticipants().containsKey(request.getUserID())) {
             session.getParticipants().remove(request.getUserID());
 
-            if (session.getParticipants().isEmpty())
+            if (session.getParticipants().isEmpty()){
                 closeSession(session.getSessionID());
+                removeSessionFiles(session.getSessionID());
+            }
+
 
             return new DisconnectResponse(ResponseStatus.SUCCESS);
         } else {
@@ -70,6 +82,18 @@ public class SessionService {
     }
 
     private void closeSession(String sessionID) {
-        sessions.remove(sessionID);
+        database.sessions.remove(sessionID);
     }
+
+    private void removeSessionFiles(String sessionID) {
+        // Get Folder
+        String serverFolderPath = "src/userSlides";
+        String folderPath = serverFolderPath + File.separator + sessionID;
+        File folder = new File(folderPath);
+
+        FolderDeleter.deleteFolder(folder);
+    }
+
+
+
 }
