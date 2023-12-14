@@ -63,10 +63,19 @@ public class SlideService {
 
     }
 
+    public String getSessionCurrentFileName(String sessionID) {
+        Session session = database.sessions.get(sessionID);
+        if (session != null) {
+            return session.getCurrentFileName();
+        }
+        return null;
+    }
     public void setSessionCurrentFileName(String sessionID,String fileName) {
         Session session = database.sessions.get(sessionID);
         if (session != null) {
             session.setCurrentFileName(fileName);
         }
     }
+
+
 }
