@@ -39,7 +39,8 @@ public class SlideController {
         if (writtenSize >= fileSize) {
             slideService.setSessionCurrentFileName(sessionID,fileName);
 
-            UploadPDFResponse response = new UploadPDFResponse(ResponseStatus.SUCCESS);
+            UploadPDFResponse response = new UploadPDFResponse(ResponseStatus.SUCCESS,fileName);
+            System.out.println(response);
             messagingTemplate.convertAndSend("/topic/uploadPDF/" + sessionID , response);
         }
         // Request to sequent parts of PDF
