@@ -9,6 +9,7 @@ public class Session {
     private Map<String, Participant> participants;
     private LocalDateTime creationTime;
     private String currentFileName;
+    private int currentIndex = 1;
 
     public Session(String sessionID , LocalDateTime creationTime) {
         this.sessionID = sessionID;
@@ -35,5 +36,13 @@ public class Session {
 
     public void setCurrentFileName(String currentFileName) {
         this.currentFileName = currentFileName;
+    }
+
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
+
+    public void setCurrentIndex(int currentIndex) {
+        this.currentIndex = currentIndex;
     }
 }

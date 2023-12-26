@@ -23,4 +23,12 @@ public class SlideService {
             System.out.println("Session bulunamadı.");
     }
 
+    public void setSessionCurrentIndex(String sessionID, int index) {
+        Session session = database.sessions.get(sessionID);
+        if (session != null)
+            session.setCurrentIndex(index);
+        else
+            System.out.println("Session bulunamadı.");
+    }
+
 }

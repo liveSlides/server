@@ -1,9 +1,6 @@
 package com.harun.liveSlideServer.controller;
 
 import com.harun.liveSlideServer.dto.*;
-import com.harun.liveSlideServer.dto.meeting.PageChangedRequest;
-import com.harun.liveSlideServer.dto.meeting.PageChangedResponse;
-import com.harun.liveSlideServer.service.SessionService;
 import com.harun.liveSlideServer.service.SlideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -24,12 +21,9 @@ public class SlideController {
     }
 
     @MessageMapping("/pageChanged/{sessionID}")
-    public void pageChanged(@DestinationVariable String sessionID , PageChangedRequest request) {
-        PageChangedResponse pageChangedResponse = new PageChangedResponse(
-                request.getIndex(),
-                request.getCanvasBase64(),
-                request.getPageBase64());
-        messagingTemplate.convertAndSend("/topic/pageChanged/" + sessionID  , pageChangedResponse);
+    public void pageChanged(@DestinationVariable String sessionID , int index) {
+        slideService.setSessionCurrentIndex(sessionID,index);
+        messagingTemplate.convertAndSend("/topic/pageChanged/" + sessionID  , index);
     }
 
     @MessageMapping("/fileUploaded/{sessionID}")

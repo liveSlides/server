@@ -92,7 +92,8 @@ public class SessionService {
             return new MeetingInitialInformationResponse();
 
         response.setFileName(session.getCurrentFileName());
-        //TODO index , hValue , vValue etc.
+        response.setIndex(session.getCurrentIndex());
+        //TODO hValue , vValue etc.
 
         return response;
     }
