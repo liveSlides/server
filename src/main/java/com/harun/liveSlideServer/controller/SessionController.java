@@ -1,9 +1,11 @@
 package com.harun.liveSlideServer.controller;
 
 import com.harun.liveSlideServer.dto.*;
+import com.harun.liveSlideServer.dto.meeting.MeetingInitialInformationResponse;
 import com.harun.liveSlideServer.model.Participant;
 import com.harun.liveSlideServer.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -51,5 +53,17 @@ public class SessionController {
         System.out.println(request);
         DisconnectResponse response = sessionService.disconnect(request);
         messagingTemplate.convertAndSend("/topic/disconnect/" + request.getSessionID()  + "/" + request.getUserID(), response);
+    }
+
+    @MessageMapping("/getMeetingInitialInformation/{sessionID}/{userID}")
+    public void getMeetingInitialInformation(@DestinationVariable String sessionID,
+                                             @DestinationVariable String userID) {
+
+        MeetingInitialInformationResponse response = sessionService.getMeetingInitialInformation(sessionID);
+        messagingTemplate.convertAndSend(
+                "/topic/meetingInitialInformation/" +
+                sessionID  +
+                        "/"
+                        + userID, response);
     }
 }

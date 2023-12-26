@@ -2,6 +2,7 @@ package com.harun.liveSlideServer.service;
 
 import com.harun.liveSlideServer.db.SessionsDatabase;
 import com.harun.liveSlideServer.dto.*;
+import com.harun.liveSlideServer.dto.meeting.MeetingInitialInformationResponse;
 import com.harun.liveSlideServer.enums.UserType;
 import com.harun.liveSlideServer.model.Participant;
 import com.harun.liveSlideServer.model.Session;
@@ -83,4 +84,16 @@ public class SessionService {
         database.sessions.remove(sessionID);
     }
 
+    public MeetingInitialInformationResponse getMeetingInitialInformation(String sessionID) {
+        MeetingInitialInformationResponse response = new MeetingInitialInformationResponse();
+        Session session = database.sessions.get(sessionID);
+
+        if (session == null)
+            return new MeetingInitialInformationResponse();
+
+        response.setFileName(session.getCurrentFileName());
+        //TODO index , hValue , vValue etc.
+
+        return response;
+    }
 }

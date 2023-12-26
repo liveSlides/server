@@ -36,6 +36,7 @@ public class SlideController {
     public void uploadPDF(@DestinationVariable String sessionID,
                           String fileName) {
 
+        slideService.setSessionCurrentFileName(fileName,sessionID);
         UploadPDFResponse uploadPDFResponse = new UploadPDFResponse(ResponseStatus.SUCCESS,fileName);
         messagingTemplate.convertAndSend("/topic/fileUploaded/" + sessionID  , uploadPDFResponse);
     }

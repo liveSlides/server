@@ -15,5 +15,12 @@ public class SlideService {
         this.database =  database;
     }
 
+    public void setSessionCurrentFileName(String fileName, String sessionID) {
+        Session session = database.sessions.get(sessionID);
+        if (session != null)
+            session.setCurrentFileName(fileName);
+        else
+            System.out.println("Session bulunamadı.");
+    }
 
 }
