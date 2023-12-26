@@ -71,9 +71,7 @@ public class SessionService {
 
             if (session.getParticipants().isEmpty()){
                 closeSession(session.getSessionID());
-                removeSessionFiles(session.getSessionID());
             }
-
 
             return new DisconnectResponse(ResponseStatus.SUCCESS);
         } else {
@@ -84,16 +82,5 @@ public class SessionService {
     private void closeSession(String sessionID) {
         database.sessions.remove(sessionID);
     }
-
-    private void removeSessionFiles(String sessionID) {
-        // Get Folder
-        String serverFolderPath = "src/userSlides";
-        String folderPath = serverFolderPath + File.separator + sessionID;
-        File folder = new File(folderPath);
-
-        FolderDeleter.deleteFolder(folder);
-    }
-
-
 
 }
