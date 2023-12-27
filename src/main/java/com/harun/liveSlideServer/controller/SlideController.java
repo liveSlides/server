@@ -56,4 +56,11 @@ public class SlideController {
         messagingTemplate.convertAndSend("/topic/zoomed/" + sessionID  , zoomRate);
     }
 
+    @MessageMapping("/rotated/{sessionID}")
+    public void rotated(@DestinationVariable String sessionID,
+                       int rotateRate) {
+        slideService.setSessionRotateRate(sessionID,rotateRate);
+        messagingTemplate.convertAndSend("/topic/rotated/" + sessionID  , rotateRate);
+    }
+
 }

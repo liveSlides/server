@@ -55,4 +55,11 @@ public class SlideService {
             System.out.println("Session bulunamadı.");
     }
 
+    public void setSessionRotateRate(String sessionID, int rotateRate) {
+        Session session = database.sessions.get(sessionID);
+        if (session != null)
+            session.setRotateRate(rotateRate);
+        else
+            System.out.println("Session bulunamadı.");
+    }
 }

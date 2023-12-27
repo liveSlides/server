@@ -8,6 +8,7 @@ public class MeetingInitialInformationResponse {
     private int zoomRate;
     private double hScrollValue;
     private double vScrollValue;
+    private int rotateRate;
 
     public MeetingInitialInformationResponse() {
 
@@ -61,17 +62,25 @@ public class MeetingInitialInformationResponse {
         this.vScrollValue = vScrollValue;
     }
 
+    public int getRotateRate() {
+        return rotateRate;
+    }
+
+    public void setRotateRate(int rotateRate) {
+        this.rotateRate = rotateRate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MeetingInitialInformationResponse response = (MeetingInitialInformationResponse) o;
-        return index == response.index && zoomRate == response.zoomRate && Double.compare(hScrollValue, response.hScrollValue) == 0 && Double.compare(vScrollValue, response.vScrollValue) == 0 && Objects.equals(fileName, response.fileName);
+        return index == response.index && zoomRate == response.zoomRate && Double.compare(hScrollValue, response.hScrollValue) == 0 && Double.compare(vScrollValue, response.vScrollValue) == 0 && rotateRate == response.rotateRate && Objects.equals(fileName, response.fileName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fileName, index, zoomRate, hScrollValue, vScrollValue);
+        return Objects.hash(fileName, index, zoomRate, hScrollValue, vScrollValue, rotateRate);
     }
 
     @Override
@@ -82,6 +91,7 @@ public class MeetingInitialInformationResponse {
                 ", zoomRate=" + zoomRate +
                 ", hScrollValue=" + hScrollValue +
                 ", vScrollValue=" + vScrollValue +
+                ", rotateRate=" + rotateRate +
                 '}';
     }
 }

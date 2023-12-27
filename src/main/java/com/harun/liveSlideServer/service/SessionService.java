@@ -96,6 +96,7 @@ public class SessionService {
         response.sethScrollValue(session.gethValue());
         response.setvScrollValue(session.getvValue());
         response.setZoomRate(session.getZoomRate());
+        response.setRotateRate(session.getRotateRate());
 
         return response;
     }

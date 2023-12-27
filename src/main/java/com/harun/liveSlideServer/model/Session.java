@@ -13,6 +13,7 @@ public class Session {
     private double hValue = 0;
     private double vValue = 0;
     private int zoomRate = 100;
+    private int rotateRate = 0;
 
     public Session(String sessionID , LocalDateTime creationTime) {
         this.sessionID = sessionID;
@@ -71,5 +72,13 @@ public class Session {
 
     public void setZoomRate(int zoomRate) {
         this.zoomRate = zoomRate;
+    }
+
+    public int getRotateRate() {
+        return rotateRate;
+    }
+
+    public void setRotateRate(int rotateRate) {
+        this.rotateRate = rotateRate;
     }
 }
