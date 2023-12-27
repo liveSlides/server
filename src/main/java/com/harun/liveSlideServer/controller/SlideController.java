@@ -49,4 +49,11 @@ public class SlideController {
         messagingTemplate.convertAndSend("/topic/scrolledVertically/" + sessionID  , vValue);
     }
 
+    @MessageMapping("/zoomed/{sessionID}")
+    public void zoomed(@DestinationVariable String sessionID,
+                                   int zoomRate) {
+        slideService.setSessionZoomRate(sessionID,zoomRate);
+        messagingTemplate.convertAndSend("/topic/zoomed/" + sessionID  , zoomRate);
+    }
+
 }

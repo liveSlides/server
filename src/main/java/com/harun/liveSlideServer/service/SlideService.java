@@ -42,7 +42,15 @@ public class SlideService {
     public void setSessionVValue(String sessionID, double vValue) {
         Session session = database.sessions.get(sessionID);
         if (session != null)
-            session.sethValue(vValue);
+            session.setvValue(vValue);
+        else
+            System.out.println("Session bulunamadı.");
+    }
+
+    public void setSessionZoomRate(String sessionID, int zoomRate) {
+        Session session = database.sessions.get(sessionID);
+        if (session != null)
+            session.setZoomRate(zoomRate);
         else
             System.out.println("Session bulunamadı.");
     }

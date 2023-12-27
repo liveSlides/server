@@ -95,7 +95,7 @@ public class SessionService {
         response.setIndex(session.getCurrentIndex());
         response.sethScrollValue(session.gethValue());
         response.setvScrollValue(session.getvValue());
-        //TODO hValue , vValue etc.
+        response.setZoomRate(session.getZoomRate());
 
         return response;
     }

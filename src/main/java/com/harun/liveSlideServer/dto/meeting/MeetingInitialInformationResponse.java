@@ -5,7 +5,7 @@ import java.util.Objects;
 public class MeetingInitialInformationResponse {
     private String fileName;
     private int index;
-    private double zoomRate;
+    private int zoomRate;
     private double hScrollValue;
     private double vScrollValue;
 
@@ -13,7 +13,7 @@ public class MeetingInitialInformationResponse {
 
     }
 
-    public MeetingInitialInformationResponse(String fileName, int index, double zoomRate, double hScrollValue, double vScrollValue) {
+    public MeetingInitialInformationResponse(String fileName, int index, int zoomRate, double hScrollValue, double vScrollValue) {
         this.fileName = fileName;
         this.index = index;
         this.zoomRate = zoomRate;
@@ -37,11 +37,11 @@ public class MeetingInitialInformationResponse {
         this.index = index;
     }
 
-    public double getZoomRate() {
+    public int getZoomRate() {
         return zoomRate;
     }
 
-    public void setZoomRate(double zoomRate) {
+    public void setZoomRate(int zoomRate) {
         this.zoomRate = zoomRate;
     }
 
@@ -65,8 +65,8 @@ public class MeetingInitialInformationResponse {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MeetingInitialInformationResponse that = (MeetingInitialInformationResponse) o;
-        return index == that.index && Double.compare(zoomRate, that.zoomRate) == 0 && Double.compare(hScrollValue, that.hScrollValue) == 0 && Double.compare(vScrollValue, that.vScrollValue) == 0 && Objects.equals(fileName, that.fileName);
+        MeetingInitialInformationResponse response = (MeetingInitialInformationResponse) o;
+        return index == response.index && zoomRate == response.zoomRate && Double.compare(hScrollValue, response.hScrollValue) == 0 && Double.compare(vScrollValue, response.vScrollValue) == 0 && Objects.equals(fileName, response.fileName);
     }
 
     @Override
