@@ -35,4 +35,18 @@ public class SlideController {
         messagingTemplate.convertAndSend("/topic/fileUploaded/" + sessionID  , uploadPDFResponse);
     }
 
+    @MessageMapping("/scrolledHorizontally/{sessionID}")
+    public void scrolledHorizontally(@DestinationVariable String sessionID,
+                          double hValue) {
+        slideService.setSessionHValue(sessionID,hValue);
+        messagingTemplate.convertAndSend("/topic/scrolledHorizontally/" + sessionID  , hValue);
+    }
+
+    @MessageMapping("/scrolledVertically/{sessionID}")
+    public void scrolledVertically(@DestinationVariable String sessionID,
+                                     double vValue) {
+        slideService.setSessionVValue(sessionID,vValue);
+        messagingTemplate.convertAndSend("/topic/scrolledVertically/" + sessionID  , vValue);
+    }
+
 }

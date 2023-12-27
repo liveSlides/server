@@ -10,6 +10,8 @@ public class Session {
     private LocalDateTime creationTime;
     private String currentFileName;
     private int currentIndex = 1;
+    private double hValue = 0;
+    private double vValue = 0;
 
     public Session(String sessionID , LocalDateTime creationTime) {
         this.sessionID = sessionID;
@@ -44,5 +46,21 @@ public class Session {
 
     public void setCurrentIndex(int currentIndex) {
         this.currentIndex = currentIndex;
+    }
+
+    public double gethValue() {
+        return hValue;
+    }
+
+    public void sethValue(double hValue) {
+        this.hValue = hValue;
+    }
+
+    public double getvValue() {
+        return vValue;
+    }
+
+    public void setvValue(double vValue) {
+        this.vValue = vValue;
     }
 }

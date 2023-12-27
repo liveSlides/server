@@ -31,4 +31,20 @@ public class SlideService {
             System.out.println("Session bulunamadı.");
     }
 
+    public void setSessionHValue(String sessionID, double hValue) {
+        Session session = database.sessions.get(sessionID);
+        if (session != null)
+            session.sethValue(hValue);
+        else
+            System.out.println("Session bulunamadı.");
+    }
+
+    public void setSessionVValue(String sessionID, double vValue) {
+        Session session = database.sessions.get(sessionID);
+        if (session != null)
+            session.sethValue(vValue);
+        else
+            System.out.println("Session bulunamadı.");
+    }
+
 }

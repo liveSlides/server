@@ -93,6 +93,8 @@ public class SessionService {
 
         response.setFileName(session.getCurrentFileName());
         response.setIndex(session.getCurrentIndex());
+        response.sethScrollValue(session.gethValue());
+        response.setvScrollValue(session.getvValue());
         //TODO hValue , vValue etc.
 
         return response;
