@@ -1,6 +1,8 @@
 package com.harun.liveSlideServer.model;
 
 import com.harun.liveSlideServer.enums.PDFTool;
+import com.harun.liveSlideServer.enums.PenColor;
+import com.harun.liveSlideServer.enums.PenEraserSize;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -17,6 +19,9 @@ public class Session {
     private int zoomRate = 100;
     private int rotateRate = 0;
     private PDFTool activeTool = PDFTool.CURSOR;
+    private PenEraserSize penSize = PenEraserSize.SMALL;
+    private PenColor penColor = PenColor.BLACK;
+    private PenEraserSize eraserSize = PenEraserSize.SMALL;
 
     public Session(String sessionID , LocalDateTime creationTime) {
         this.sessionID = sessionID;
@@ -91,5 +96,29 @@ public class Session {
 
     public void setActiveTool(PDFTool activeTool) {
         this.activeTool = activeTool;
+    }
+
+    public PenEraserSize getPenSize() {
+        return penSize;
+    }
+
+    public void setPenSize(PenEraserSize size) {
+        this.penSize = size;
+    }
+
+    public PenColor getPenColor() {
+        return penColor;
+    }
+
+    public void setPenColor(PenColor color) {
+        this.penColor = color;
+    }
+
+    public PenEraserSize getEraserSize() {
+        return eraserSize;
+    }
+
+    public void setEraserSize(PenEraserSize size) {
+        this.eraserSize = size;
     }
 }

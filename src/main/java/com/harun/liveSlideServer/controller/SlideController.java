@@ -2,6 +2,8 @@ package com.harun.liveSlideServer.controller;
 
 import com.harun.liveSlideServer.dto.*;
 import com.harun.liveSlideServer.enums.PDFTool;
+import com.harun.liveSlideServer.enums.PenColor;
+import com.harun.liveSlideServer.enums.PenEraserSize;
 import com.harun.liveSlideServer.service.SlideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -69,6 +71,27 @@ public class SlideController {
                         PDFTool activeTool) {
         slideService.setSessionActiveTool(sessionID,activeTool);
         messagingTemplate.convertAndSend("/topic/activeToolChanged/" + sessionID  , activeTool);
+    }
+
+    @MessageMapping("/penSizeChanged/{sessionID}")
+    public void penSizeChanged(@DestinationVariable String sessionID,
+                                  PenEraserSize size) {
+        slideService.setSessionPenSize(sessionID,size);
+        messagingTemplate.convertAndSend("/topic/penSizeChanged/" + sessionID  , size);
+    }
+
+    @MessageMapping("/penColorChanged/{sessionID}")
+    public void penColorChanged(@DestinationVariable String sessionID,
+                                  PenColor color) {
+        slideService.setSessionPenColor(sessionID,color);
+        messagingTemplate.convertAndSend("/topic/penColorChanged/" + sessionID  , color);
+    }
+
+    @MessageMapping("/eraserSizeChanged/{sessionID}")
+    public void eraserSizeChanged(@DestinationVariable String sessionID,
+                                  PenEraserSize size) {
+        slideService.setSessionEraserSize(sessionID,size);
+        messagingTemplate.convertAndSend("/topic/eraserSizeChanged/" + sessionID  , size);
     }
 
 }

@@ -1,6 +1,8 @@
 package com.harun.liveSlideServer.dto.meeting;
 
 import com.harun.liveSlideServer.enums.PDFTool;
+import com.harun.liveSlideServer.enums.PenColor;
+import com.harun.liveSlideServer.enums.PenEraserSize;
 
 import java.util.Objects;
 
@@ -12,6 +14,9 @@ public class MeetingInitialInformationResponse {
     private double vScrollValue;
     private int rotateRate;
     private PDFTool activeTool;
+    private PenEraserSize penSize;
+    private PenColor penColor;
+    private PenEraserSize eraserSize;
 
     public MeetingInitialInformationResponse() {
 
@@ -81,17 +86,41 @@ public class MeetingInitialInformationResponse {
         this.activeTool = activeTool;
     }
 
+    public PenEraserSize getPenSize() {
+        return penSize;
+    }
+
+    public void setPenSize(PenEraserSize penSize) {
+        this.penSize = penSize;
+    }
+
+    public PenColor getPenColor() {
+        return penColor;
+    }
+
+    public void setPenColor(PenColor penColor) {
+        this.penColor = penColor;
+    }
+
+    public PenEraserSize getEraserSize() {
+        return eraserSize;
+    }
+
+    public void setEraserSize(PenEraserSize eraserSize) {
+        this.eraserSize = eraserSize;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MeetingInitialInformationResponse response = (MeetingInitialInformationResponse) o;
-        return index == response.index && zoomRate == response.zoomRate && Double.compare(hScrollValue, response.hScrollValue) == 0 && Double.compare(vScrollValue, response.vScrollValue) == 0 && rotateRate == response.rotateRate && Objects.equals(fileName, response.fileName) && activeTool == response.activeTool;
+        return index == response.index && zoomRate == response.zoomRate && Double.compare(hScrollValue, response.hScrollValue) == 0 && Double.compare(vScrollValue, response.vScrollValue) == 0 && rotateRate == response.rotateRate && Objects.equals(fileName, response.fileName) && activeTool == response.activeTool && penSize == response.penSize && penColor == response.penColor && eraserSize == response.eraserSize;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fileName, index, zoomRate, hScrollValue, vScrollValue, rotateRate, activeTool);
+        return Objects.hash(fileName, index, zoomRate, hScrollValue, vScrollValue, rotateRate, activeTool, penSize, penColor, eraserSize);
     }
 
     @Override
@@ -104,6 +133,9 @@ public class MeetingInitialInformationResponse {
                 ", vScrollValue=" + vScrollValue +
                 ", rotateRate=" + rotateRate +
                 ", activeTool=" + activeTool +
+                ", penSize=" + penSize +
+                ", penColor=" + penColor +
+                ", eraserSize=" + eraserSize +
                 '}';
     }
 }

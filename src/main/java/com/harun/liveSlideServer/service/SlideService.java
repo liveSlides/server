@@ -2,6 +2,8 @@ package com.harun.liveSlideServer.service;
 
 import com.harun.liveSlideServer.db.SessionsDatabase;
 import com.harun.liveSlideServer.enums.PDFTool;
+import com.harun.liveSlideServer.enums.PenColor;
+import com.harun.liveSlideServer.enums.PenEraserSize;
 import com.harun.liveSlideServer.model.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,6 +70,30 @@ public class SlideService {
         Session session = database.sessions.get(sessionID);
         if (session != null)
             session.setActiveTool(activeTool);
+        else
+            System.out.println("Session bulunamadı.");
+    }
+
+    public void setSessionPenSize(String sessionID, PenEraserSize size) {
+        Session session = database.sessions.get(sessionID);
+        if (session != null)
+            session.setPenSize(size);
+        else
+            System.out.println("Session bulunamadı.");
+    }
+
+    public void setSessionPenColor(String sessionID, PenColor color) {
+        Session session = database.sessions.get(sessionID);
+        if (session != null)
+            session.setPenColor(color);
+        else
+            System.out.println("Session bulunamadı.");
+    }
+
+    public void setSessionEraserSize(String sessionID, PenEraserSize size) {
+        Session session = database.sessions.get(sessionID);
+        if (session != null)
+            session.setEraserSize(size);
         else
             System.out.println("Session bulunamadı.");
     }

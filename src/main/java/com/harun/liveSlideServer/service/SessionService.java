@@ -98,6 +98,9 @@ public class SessionService {
         response.setZoomRate(session.getZoomRate());
         response.setRotateRate(session.getRotateRate());
         response.setActiveTool(session.getActiveTool());
+        response.setPenSize(session.getPenSize());
+        response.setPenColor(session.getPenColor());
+        response.setEraserSize(session.getEraserSize());
 
         return response;
     }
