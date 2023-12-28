@@ -1,6 +1,7 @@
 package com.harun.liveSlideServer.controller;
 
 import com.harun.liveSlideServer.dto.*;
+import com.harun.liveSlideServer.dto.slide.CanvasEvent;
 import com.harun.liveSlideServer.dto.slide.PointedEvent;
 import com.harun.liveSlideServer.dto.slide.UploadPDFResponse;
 import com.harun.liveSlideServer.enums.PDFTool;
@@ -100,6 +101,18 @@ public class SlideController {
     public void pointed(@DestinationVariable String sessionID,
                                   PointedEvent event) {
         messagingTemplate.convertAndSend("/topic/pointed/" + sessionID  , event);
+    }
+
+    @MessageMapping("/canvasPressed/{sessionID}")
+    public void canvasPressed(@DestinationVariable String sessionID,
+                        CanvasEvent event) {
+        messagingTemplate.convertAndSend("/topic/canvasPressed/" + sessionID  , event);
+    }
+
+    @MessageMapping("/canvasDragged/{sessionID}")
+    public void canvasDragged(@DestinationVariable String sessionID,
+                        CanvasEvent event) {
+        messagingTemplate.convertAndSend("/topic/canvasDragged/" + sessionID  , event);
     }
 
 }
