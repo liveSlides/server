@@ -1,6 +1,7 @@
 package com.harun.liveSlideServer.service;
 
 import com.harun.liveSlideServer.db.SessionsDatabase;
+import com.harun.liveSlideServer.enums.PDFTool;
 import com.harun.liveSlideServer.model.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,14 @@ public class SlideService {
         Session session = database.sessions.get(sessionID);
         if (session != null)
             session.setRotateRate(rotateRate);
+        else
+            System.out.println("Session bulunamadı.");
+    }
+
+    public void setSessionActiveTool(String sessionID, PDFTool activeTool) {
+        Session session = database.sessions.get(sessionID);
+        if (session != null)
+            session.setActiveTool(activeTool);
         else
             System.out.println("Session bulunamadı.");
     }

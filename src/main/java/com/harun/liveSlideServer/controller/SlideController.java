@@ -1,6 +1,7 @@
 package com.harun.liveSlideServer.controller;
 
 import com.harun.liveSlideServer.dto.*;
+import com.harun.liveSlideServer.enums.PDFTool;
 import com.harun.liveSlideServer.service.SlideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -61,6 +62,13 @@ public class SlideController {
                        int rotateRate) {
         slideService.setSessionRotateRate(sessionID,rotateRate);
         messagingTemplate.convertAndSend("/topic/rotated/" + sessionID  , rotateRate);
+    }
+
+    @MessageMapping("/activeToolChanged/{sessionID}")
+    public void activeToolChanged(@DestinationVariable String sessionID,
+                        PDFTool activeTool) {
+        slideService.setSessionActiveTool(sessionID,activeTool);
+        messagingTemplate.convertAndSend("/topic/activeToolChanged/" + sessionID  , activeTool);
     }
 
 }

@@ -1,5 +1,7 @@
 package com.harun.liveSlideServer.dto.meeting;
 
+import com.harun.liveSlideServer.enums.PDFTool;
+
 import java.util.Objects;
 
 public class MeetingInitialInformationResponse {
@@ -9,6 +11,7 @@ public class MeetingInitialInformationResponse {
     private double hScrollValue;
     private double vScrollValue;
     private int rotateRate;
+    private PDFTool activeTool;
 
     public MeetingInitialInformationResponse() {
 
@@ -70,17 +73,25 @@ public class MeetingInitialInformationResponse {
         this.rotateRate = rotateRate;
     }
 
+    public PDFTool getActiveTool() {
+        return activeTool;
+    }
+
+    public void setActiveTool(PDFTool activeTool) {
+        this.activeTool = activeTool;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MeetingInitialInformationResponse response = (MeetingInitialInformationResponse) o;
-        return index == response.index && zoomRate == response.zoomRate && Double.compare(hScrollValue, response.hScrollValue) == 0 && Double.compare(vScrollValue, response.vScrollValue) == 0 && rotateRate == response.rotateRate && Objects.equals(fileName, response.fileName);
+        return index == response.index && zoomRate == response.zoomRate && Double.compare(hScrollValue, response.hScrollValue) == 0 && Double.compare(vScrollValue, response.vScrollValue) == 0 && rotateRate == response.rotateRate && Objects.equals(fileName, response.fileName) && activeTool == response.activeTool;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fileName, index, zoomRate, hScrollValue, vScrollValue, rotateRate);
+        return Objects.hash(fileName, index, zoomRate, hScrollValue, vScrollValue, rotateRate, activeTool);
     }
 
     @Override
@@ -92,6 +103,7 @@ public class MeetingInitialInformationResponse {
                 ", hScrollValue=" + hScrollValue +
                 ", vScrollValue=" + vScrollValue +
                 ", rotateRate=" + rotateRate +
+                ", activeTool=" + activeTool +
                 '}';
     }
 }

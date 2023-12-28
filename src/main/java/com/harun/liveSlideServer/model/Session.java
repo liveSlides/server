@@ -1,5 +1,7 @@
 package com.harun.liveSlideServer.model;
 
+import com.harun.liveSlideServer.enums.PDFTool;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +16,7 @@ public class Session {
     private double vValue = 0;
     private int zoomRate = 100;
     private int rotateRate = 0;
+    private PDFTool activeTool = PDFTool.CURSOR;
 
     public Session(String sessionID , LocalDateTime creationTime) {
         this.sessionID = sessionID;
@@ -80,5 +83,13 @@ public class Session {
 
     public void setRotateRate(int rotateRate) {
         this.rotateRate = rotateRate;
+    }
+
+    public PDFTool getActiveTool() {
+        return activeTool;
+    }
+
+    public void setActiveTool(PDFTool activeTool) {
+        this.activeTool = activeTool;
     }
 }
