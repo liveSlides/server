@@ -1,16 +1,18 @@
-package com.harun.liveSlideServer.dto;
+package com.harun.liveSlideServer.dto.slide;
 
-public class DownloadPDFResponse {
+import com.harun.liveSlideServer.dto.ResponseStatus;
+
+public class UploadPDFResponse {
     public ResponseStatus status;
     public String fileName;
 
-    public DownloadPDFResponse() {
+    public UploadPDFResponse() {
 
     }
 
-    public DownloadPDFResponse(ResponseStatus status, String fileName) {
+    public UploadPDFResponse(ResponseStatus status, String filename) {
         this.status = status;
-        this.fileName = fileName;
+        this.fileName = filename;
     }
 
     public ResponseStatus getStatus() {

@@ -1,4 +1,4 @@
-package com.harun.liveSlideServer.dto.meeting;
+package com.harun.liveSlideServer.dto;
 
 import com.harun.liveSlideServer.enums.PDFTool;
 import com.harun.liveSlideServer.enums.PenColor;

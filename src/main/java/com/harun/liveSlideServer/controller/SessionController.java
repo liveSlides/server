@@ -1,8 +1,7 @@
 package com.harun.liveSlideServer.controller;
 
 import com.harun.liveSlideServer.dto.*;
-import com.harun.liveSlideServer.dto.meeting.MeetingInitialInformationResponse;
-import com.harun.liveSlideServer.model.Participant;
+import com.harun.liveSlideServer.dto.MeetingInitialInformationResponse;
 import com.harun.liveSlideServer.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -10,9 +9,6 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Controller
 public class SessionController {

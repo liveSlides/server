@@ -1,6 +1,8 @@
 package com.harun.liveSlideServer.controller;
 
 import com.harun.liveSlideServer.dto.*;
+import com.harun.liveSlideServer.dto.slide.PointedEvent;
+import com.harun.liveSlideServer.dto.slide.UploadPDFResponse;
 import com.harun.liveSlideServer.enums.PDFTool;
 import com.harun.liveSlideServer.enums.PenColor;
 import com.harun.liveSlideServer.enums.PenEraserSize;
@@ -92,6 +94,12 @@ public class SlideController {
                                   PenEraserSize size) {
         slideService.setSessionEraserSize(sessionID,size);
         messagingTemplate.convertAndSend("/topic/eraserSizeChanged/" + sessionID  , size);
+    }
+
+    @MessageMapping("/pointed/{sessionID}")
+    public void pointed(@DestinationVariable String sessionID,
+                                  PointedEvent event) {
+        messagingTemplate.convertAndSend("/topic/pointed/" + sessionID  , event);
     }
 
 }

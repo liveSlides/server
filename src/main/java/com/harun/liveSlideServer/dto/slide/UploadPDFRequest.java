@@ -1,6 +1,4 @@
-package com.harun.liveSlideServer.dto;
-
-import java.util.Arrays;
+package com.harun.liveSlideServer.dto.slide;
 
 public class UploadPDFRequest {
     public String encodedFileContent;

@@ -2,19 +2,15 @@ package com.harun.liveSlideServer.service;
 
 import com.harun.liveSlideServer.db.SessionsDatabase;
 import com.harun.liveSlideServer.dto.*;
-import com.harun.liveSlideServer.dto.meeting.MeetingInitialInformationResponse;
+import com.harun.liveSlideServer.dto.MeetingInitialInformationResponse;
 import com.harun.liveSlideServer.enums.UserType;
 import com.harun.liveSlideServer.model.Participant;
 import com.harun.liveSlideServer.model.Session;
-import com.harun.liveSlideServer.util.FolderDeleter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 
