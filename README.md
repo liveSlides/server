@@ -13,7 +13,6 @@
 - [Screenshots](#screenshots)
 - [System Requirements](#system-requirements)
 - [Technologies](#technologies)
-- [Contributors](#contributors)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -35,21 +34,30 @@ Frontend :<br/>
 ## Screenshots
 
 * Login Page <br><br>
-    <img src = "images/login.png" height=400> &nbsp;
-    <img src = "images/register.png" height=400>
+  <img src = "images/login.png" height=400> &nbsp;
 
 * Host ID Alert <br><br>
-    <img src = "images/home.png" height=400> &nbsp;
-    
+  <img src = "images/host-id-alert.png" height=400> &nbsp;
+
 * PDF Viewer Features <br><br>
-    <img src = "images/allStocks" height=400>
-    <img src = "images/allCurrencies" height=400>
-    <img src = "images/allCommodities" height=400>
+  <img src = "images/pdf-viewer-1.png" height=400>
+  <img src = "images/pdf-viewer-2.png" height=400>
+  <img src = "images/pdf-viewer-3.png" height=400>
+* <img src = "images/pdf-viewer-4.png" height=400>
+  <img src = "images/pdf-viewer-5.png" height=400>
+  <img src = "images/pdf-viewer-6.png" height=400>
 
 * Meeting Screen Features <br><br>
-    <img src = "images/stock" height=400>
-    <img src = "images/currency" height=400>
-    <img src = "images/commodity" height=400>
+  <img src = "images/meeting-screen-timer.png" height=400>
+  <img src = "images/meeting-screen-request.png" height=400>
+  <img src = "images/meeting-screen-participants.png" height=400>
+
+* Async Between Host and Participant <br><br>
+  <img src = "images/sync-1.png" height=400>
+  <br>
+  <img src = "images/sync-2.png" height=400>
+  <br>
+  <img src = "images/sync-3.png" height=400>
 
 ## System Requirements
 
