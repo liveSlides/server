@@ -67,6 +67,7 @@ public class SessionController {
     public void getMeetingInitialInformation(@DestinationVariable String sessionID,
                                            @DestinationVariable String userID) {
 
+        System.out.println(" Request comes getMeetingInitialInformation");
         messagingTemplate.convertAndSend("/topic/meetingInitialInformation/" +
                         sessionID  +
                         "/"
@@ -75,5 +76,8 @@ public class SessionController {
                         sessionService.getMeetingFileName(sessionID),
                         sessionService.getMeetingCanvasEventLog(sessionID)
                 ));
+
+        System.out.println(" Request gone getMeetingInitialInformation");
+
     }
 }
