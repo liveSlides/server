@@ -2,7 +2,7 @@ package com.harun.liveSlideServer.service;
 
 import com.harun.liveSlideServer.db.SessionsDatabase;
 import com.harun.liveSlideServer.dto.*;
-import com.harun.liveSlideServer.dto.MeetingInitialInformationResponse;
+import com.harun.liveSlideServer.dto.MeetingSynchInformationResponse;
 import com.harun.liveSlideServer.enums.UserType;
 import com.harun.liveSlideServer.model.Participant;
 import com.harun.liveSlideServer.model.Session;
@@ -80,12 +80,12 @@ public class SessionService {
         database.sessions.remove(sessionID);
     }
 
-    public MeetingInitialInformationResponse getMeetingInitialInformation(String sessionID) {
-        MeetingInitialInformationResponse response = new MeetingInitialInformationResponse();
+    public MeetingSynchInformationResponse getMeetingSynchInformation(String sessionID) {
+        MeetingSynchInformationResponse response = new MeetingSynchInformationResponse();
         Session session = database.sessions.get(sessionID);
 
         if (session == null)
-            return new MeetingInitialInformationResponse();
+            return new MeetingSynchInformationResponse();
 
         response.setFileName(session.getCurrentFileName());
         response.setIndex(session.getCurrentIndex());
@@ -99,5 +99,14 @@ public class SessionService {
         response.setEraserSize(session.getEraserSize());
 
         return response;
+    }
+
+    public String getMeetingFileName(String sessionID) {
+        Session session = database.sessions.get(sessionID);
+
+        if (session == null)
+            return null;
+
+        return session.getCurrentFileName();
     }
 }

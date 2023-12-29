@@ -1,7 +1,7 @@
 package com.harun.liveSlideServer.controller;
 
 import com.harun.liveSlideServer.dto.*;
-import com.harun.liveSlideServer.dto.MeetingInitialInformationResponse;
+import com.harun.liveSlideServer.dto.MeetingSynchInformationResponse;
 import com.harun.liveSlideServer.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -51,15 +51,28 @@ public class SessionController {
         messagingTemplate.convertAndSend("/topic/disconnect/" + request.getSessionID()  + "/" + request.getUserID(), response);
     }
 
-    @MessageMapping("/getMeetingInitialInformation/{sessionID}/{userID}")
-    public void getMeetingInitialInformation(@DestinationVariable String sessionID,
+    @MessageMapping("/getMeetingSynchInformation/{sessionID}/{userID}")
+    public void getMeetingSynchInformation(@DestinationVariable String sessionID,
                                              @DestinationVariable String userID) {
 
-        MeetingInitialInformationResponse response = sessionService.getMeetingInitialInformation(sessionID);
+        MeetingSynchInformationResponse response = sessionService.getMeetingSynchInformation(sessionID);
         messagingTemplate.convertAndSend(
-                "/topic/meetingInitialInformation/" +
+                "/topic/meetingSynchInformation/" +
                 sessionID  +
                         "/"
                         + userID, response);
+    }
+
+    @MessageMapping("/getMeetingFileInformation/{sessionID}/{userID}")
+    public void getMeetingFileInformation(@DestinationVariable String sessionID,
+                                           @DestinationVariable String userID) {
+        System.out.println(sessionService.getMeetingFileName(sessionID));
+        String destination = "/topic/meetingFileInformation/" +
+                sessionID  +
+                "/"
+                + userID;
+        System.out.println("Destination :" + destination);
+        messagingTemplate.convertAndSend(destination
+                , new MeetingFileInformationResponse(sessionService.getMeetingFileName(sessionID)));
     }
 }

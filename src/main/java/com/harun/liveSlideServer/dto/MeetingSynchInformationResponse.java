@@ -6,7 +6,7 @@ import com.harun.liveSlideServer.enums.PenEraserSize;
 
 import java.util.Objects;
 
-public class MeetingInitialInformationResponse {
+public class MeetingSynchInformationResponse {
     private String fileName;
     private int index;
     private int zoomRate;
@@ -18,11 +18,11 @@ public class MeetingInitialInformationResponse {
     private PenColor penColor;
     private PenEraserSize eraserSize;
 
-    public MeetingInitialInformationResponse() {
+    public MeetingSynchInformationResponse() {
 
     }
 
-    public MeetingInitialInformationResponse(String fileName, int index, int zoomRate, double hScrollValue, double vScrollValue) {
+    public MeetingSynchInformationResponse(String fileName, int index, int zoomRate, double hScrollValue, double vScrollValue) {
         this.fileName = fileName;
         this.index = index;
         this.zoomRate = zoomRate;
@@ -114,7 +114,7 @@ public class MeetingInitialInformationResponse {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MeetingInitialInformationResponse response = (MeetingInitialInformationResponse) o;
+        MeetingSynchInformationResponse response = (MeetingSynchInformationResponse) o;
         return index == response.index && zoomRate == response.zoomRate && Double.compare(hScrollValue, response.hScrollValue) == 0 && Double.compare(vScrollValue, response.vScrollValue) == 0 && rotateRate == response.rotateRate && Objects.equals(fileName, response.fileName) && activeTool == response.activeTool && penSize == response.penSize && penColor == response.penColor && eraserSize == response.eraserSize;
     }
 
