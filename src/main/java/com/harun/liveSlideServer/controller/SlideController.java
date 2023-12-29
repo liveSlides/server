@@ -2,6 +2,7 @@ package com.harun.liveSlideServer.controller;
 
 import com.harun.liveSlideServer.dto.*;
 import com.harun.liveSlideServer.dto.slide.CanvasEvent;
+import com.harun.liveSlideServer.dto.slide.PageChangedEvent;
 import com.harun.liveSlideServer.dto.slide.PointedEvent;
 import com.harun.liveSlideServer.dto.slide.UploadPDFResponse;
 import com.harun.liveSlideServer.enums.PDFTool;
@@ -27,9 +28,12 @@ public class SlideController {
     }
 
     @MessageMapping("/pageChanged/{sessionID}")
-    public void pageChanged(@DestinationVariable String sessionID , int index) {
-        slideService.setSessionCurrentIndex(sessionID,index);
-        messagingTemplate.convertAndSend("/topic/pageChanged/" + sessionID  , index);
+    public void pageChanged(@DestinationVariable String sessionID , PageChangedEvent event) {
+        slideService.setSessionCurrentIndex(sessionID,event.getIndex());
+        slideService.setSessionZoomRate(sessionID,event.getZoomRate());
+        slideService.setSessionVValue(sessionID,event.getvValue());
+        slideService.setSessionHValue(sessionID,event.gethValue());
+        messagingTemplate.convertAndSend("/topic/pageChanged/" + sessionID  , event);
     }
 
     @MessageMapping("/fileUploaded/{sessionID}")
