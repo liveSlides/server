@@ -2,9 +2,10 @@ package com.harun.liveSlideServer.controller;
 
 import com.harun.liveSlideServer.dto.*;
 import com.harun.liveSlideServer.dto.slide.CanvasEvent;
+import com.harun.liveSlideServer.dto.slide.FileUploadedEvent;
 import com.harun.liveSlideServer.dto.slide.PageChangedEvent;
 import com.harun.liveSlideServer.dto.slide.PointedEvent;
-import com.harun.liveSlideServer.dto.slide.UploadPDFResponse;
+import com.harun.liveSlideServer.enums.CanvasEventType;
 import com.harun.liveSlideServer.enums.PDFTool;
 import com.harun.liveSlideServer.enums.PenColor;
 import com.harun.liveSlideServer.enums.PenEraserSize;
@@ -38,11 +39,12 @@ public class SlideController {
 
     @MessageMapping("/fileUploaded/{sessionID}")
     public void uploadPDF(@DestinationVariable String sessionID,
-                          String fileName) {
+                          FileUploadedEvent event) {
 
-        slideService.setSessionCurrentFileName(fileName,sessionID);
-        UploadPDFResponse uploadPDFResponse = new UploadPDFResponse(ResponseStatus.SUCCESS,fileName);
-        messagingTemplate.convertAndSend("/topic/fileUploaded/" + sessionID  , uploadPDFResponse);
+        slideService.setSessionCurrentFileName(sessionID, event.getFileName());
+        slideService.setSessionPageCount(sessionID, event.getPageCount());
+        slideService.initializeCanvasEventLogs(sessionID);
+        messagingTemplate.convertAndSend("/topic/fileUploaded/" + sessionID  , event);
     }
 
     @MessageMapping("/scrolledHorizontally/{sessionID}")
@@ -110,12 +112,14 @@ public class SlideController {
     @MessageMapping("/canvasPressed/{sessionID}")
     public void canvasPressed(@DestinationVariable String sessionID,
                         CanvasEvent event) {
+        slideService.addCanvasEvent(sessionID,event, CanvasEventType.PRESSED);
         messagingTemplate.convertAndSend("/topic/canvasPressed/" + sessionID  , event);
     }
 
     @MessageMapping("/canvasDragged/{sessionID}")
     public void canvasDragged(@DestinationVariable String sessionID,
                         CanvasEvent event) {
+        slideService.addCanvasEvent(sessionID,event, CanvasEventType.DRAGGED);
         messagingTemplate.convertAndSend("/topic/canvasDragged/" + sessionID  , event);
     }
 

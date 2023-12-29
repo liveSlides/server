@@ -3,6 +3,7 @@ package com.harun.liveSlideServer.service;
 import com.harun.liveSlideServer.db.SessionsDatabase;
 import com.harun.liveSlideServer.dto.*;
 import com.harun.liveSlideServer.dto.MeetingSynchInformationResponse;
+import com.harun.liveSlideServer.enums.CanvasEventLog;
 import com.harun.liveSlideServer.enums.UserType;
 import com.harun.liveSlideServer.model.Participant;
 import com.harun.liveSlideServer.model.Session;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 
@@ -108,5 +110,14 @@ public class SessionService {
             return null;
 
         return session.getCurrentFileName();
+    }
+
+    public LinkedList<CanvasEventLog>[] getMeetingCanvasEventLog(String sessionID) {
+        Session session = database.sessions.get(sessionID);
+
+        if (session == null)
+            return null;
+
+        return session.getCanvasEvents();
     }
 }

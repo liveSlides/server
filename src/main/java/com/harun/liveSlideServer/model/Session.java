@@ -1,11 +1,14 @@
 package com.harun.liveSlideServer.model;
 
+import com.harun.liveSlideServer.enums.CanvasEventLog;
 import com.harun.liveSlideServer.enums.PDFTool;
 import com.harun.liveSlideServer.enums.PenColor;
 import com.harun.liveSlideServer.enums.PenEraserSize;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class Session {
@@ -13,6 +16,7 @@ public class Session {
     private Map<String, Participant> participants;
     private LocalDateTime creationTime;
     private String currentFileName;
+    private int pageCount;
     private int currentIndex = 1;
     private double hValue = 0;
     private double vValue = 0;
@@ -22,6 +26,7 @@ public class Session {
     private PenEraserSize penSize = PenEraserSize.SMALL;
     private PenColor penColor = PenColor.BLACK;
     private PenEraserSize eraserSize = PenEraserSize.SMALL;
+    private LinkedList<CanvasEventLog>[] canvasEvents;
 
     public Session(String sessionID , LocalDateTime creationTime) {
         this.sessionID = sessionID;
@@ -48,6 +53,14 @@ public class Session {
 
     public void setCurrentFileName(String currentFileName) {
         this.currentFileName = currentFileName;
+    }
+
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
     }
 
     public int getCurrentIndex() {
@@ -120,5 +133,19 @@ public class Session {
 
     public void setEraserSize(PenEraserSize size) {
         this.eraserSize = size;
+    }
+
+    public LinkedList<CanvasEventLog>[] getCanvasEvents() {
+        return canvasEvents;
+    }
+
+    public void setCanvasEvents(LinkedList<CanvasEventLog>[] canvasEvents) {
+        this.canvasEvents = canvasEvents;
+    }
+
+    public void initializeCanvasEventsEmpty(){
+        for (int i = 0; i < canvasEvents.length; i++) {
+            canvasEvents[i] = new LinkedList<>();
+        }
     }
 }

@@ -63,16 +63,17 @@ public class SessionController {
                         + userID, response);
     }
 
-    @MessageMapping("/getMeetingFileInformation/{sessionID}/{userID}")
-    public void getMeetingFileInformation(@DestinationVariable String sessionID,
+    @MessageMapping("/getMeetingInitialInformation/{sessionID}/{userID}")
+    public void getMeetingInitialInformation(@DestinationVariable String sessionID,
                                            @DestinationVariable String userID) {
-        System.out.println(sessionService.getMeetingFileName(sessionID));
-        String destination = "/topic/meetingFileInformation/" +
-                sessionID  +
-                "/"
-                + userID;
-        System.out.println("Destination :" + destination);
-        messagingTemplate.convertAndSend(destination
-                , new MeetingFileInformationResponse(sessionService.getMeetingFileName(sessionID)));
+
+        messagingTemplate.convertAndSend("/topic/meetingInitialInformation/" +
+                        sessionID  +
+                        "/"
+                        + userID
+                , new MeetingInitialInformationResponse(
+                        sessionService.getMeetingFileName(sessionID),
+                        sessionService.getMeetingCanvasEventLog(sessionID)
+                ));
     }
 }
