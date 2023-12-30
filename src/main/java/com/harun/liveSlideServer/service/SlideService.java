@@ -29,6 +29,14 @@ public class SlideService {
             System.out.println("Session bulunamadı.");
     }
 
+    public void setSessionHostScreenWidth(String sessionID, double hostScreenWidth) {
+        Session session = database.sessions.get(sessionID);
+        if (session != null)
+            session.setHostScreenWidth(hostScreenWidth);
+        else
+            System.out.println("Session bulunamadı.");
+    }
+
     public void setSessionCurrentIndex(String sessionID, int index) {
         Session session = database.sessions.get(sessionID);
         if (session != null)

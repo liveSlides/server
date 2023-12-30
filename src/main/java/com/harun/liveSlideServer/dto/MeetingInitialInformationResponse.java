@@ -9,15 +9,17 @@ import java.util.Objects;
 public class MeetingInitialInformationResponse {
     private String fileName;
     private LinkedList<CanvasEventLog>[] canvasEvents;
+    private double hostScreenWidth;
 
 
     public MeetingInitialInformationResponse() {
 
     }
 
-    public MeetingInitialInformationResponse(String fileName , LinkedList<CanvasEventLog>[] canvasEvents) {
+    public MeetingInitialInformationResponse(String fileName , LinkedList<CanvasEventLog>[] canvasEvents, double hostScreenWidth) {
         this.fileName = fileName;
         this.canvasEvents = canvasEvents;
+        this.hostScreenWidth = hostScreenWidth;
     }
 
     public String getFileName() {
@@ -36,17 +38,25 @@ public class MeetingInitialInformationResponse {
         this.canvasEvents = canvasEvents;
     }
 
+    public double getHostScreenWidth() {
+        return hostScreenWidth;
+    }
+
+    public void setHostScreenWidth(double hostScreenWidth) {
+        this.hostScreenWidth = hostScreenWidth;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MeetingInitialInformationResponse that = (MeetingInitialInformationResponse) o;
-        return Objects.equals(fileName, that.fileName) && Arrays.equals(canvasEvents, that.canvasEvents);
+        return Double.compare(hostScreenWidth, that.hostScreenWidth) == 0 && Objects.equals(fileName, that.fileName) && Arrays.equals(canvasEvents, that.canvasEvents);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(fileName);
+        int result = Objects.hash(fileName, hostScreenWidth);
         result = 31 * result + Arrays.hashCode(canvasEvents);
         return result;
     }
@@ -56,6 +66,7 @@ public class MeetingInitialInformationResponse {
         return "MeetingInitialInformationResponse{" +
                 "fileName='" + fileName + '\'' +
                 ", canvasEvents=" + Arrays.toString(canvasEvents) +
+                ", hostScreenWidth=" + hostScreenWidth +
                 '}';
     }
 }

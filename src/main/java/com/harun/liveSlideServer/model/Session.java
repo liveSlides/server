@@ -16,6 +16,7 @@ public class Session {
     private Map<String, Participant> participants;
     private LocalDateTime creationTime;
     private String currentFileName;
+    private double hostScreenWidth = -1;
     private int pageCount;
     private int currentIndex = 1;
     private double hValue = 0;
@@ -27,6 +28,7 @@ public class Session {
     private PenColor penColor = PenColor.BLACK;
     private PenEraserSize eraserSize = PenEraserSize.SMALL;
     private LinkedList<CanvasEventLog>[] canvasEvents;
+
 
     public Session(String sessionID , LocalDateTime creationTime) {
         this.sessionID = sessionID;
@@ -53,6 +55,14 @@ public class Session {
 
     public void setCurrentFileName(String currentFileName) {
         this.currentFileName = currentFileName;
+    }
+
+    public double getHostScreenWidth() {
+        return hostScreenWidth;
+    }
+
+    public void setHostScreenWidth(double hostScreenWidth) {
+        this.hostScreenWidth = hostScreenWidth;
     }
 
     public int getPageCount() {

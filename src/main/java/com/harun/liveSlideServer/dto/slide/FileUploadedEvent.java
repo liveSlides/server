@@ -5,14 +5,16 @@ import java.util.Objects;
 public class FileUploadedEvent {
     private String fileName;
     private int pageCount;
+    private double hostScreenWidth;
 
     public FileUploadedEvent() {
 
     }
 
-    public FileUploadedEvent(String fileName, int pageCount) {
+    public FileUploadedEvent(String fileName, int pageCount, double hostScreenWidth) {
         this.fileName = fileName;
         this.pageCount = pageCount;
+        this.hostScreenWidth = hostScreenWidth;
     }
 
     public String getFileName() {
@@ -31,17 +33,25 @@ public class FileUploadedEvent {
         this.pageCount = pageCount;
     }
 
+    public double getHostScreenWidth() {
+        return hostScreenWidth;
+    }
+
+    public void setHostScreenWidth(double hostScreenWidth) {
+        this.hostScreenWidth = hostScreenWidth;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FileUploadedEvent that = (FileUploadedEvent) o;
-        return pageCount == that.pageCount && Objects.equals(fileName, that.fileName);
+        return pageCount == that.pageCount && Double.compare(hostScreenWidth, that.hostScreenWidth) == 0 && Objects.equals(fileName, that.fileName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fileName, pageCount);
+        return Objects.hash(fileName, pageCount, hostScreenWidth);
     }
 
     @Override
@@ -49,6 +59,7 @@ public class FileUploadedEvent {
         return "FileUploadedEvent{" +
                 "fileName='" + fileName + '\'' +
                 ", pageCount=" + pageCount +
+                ", hostScreenWidth=" + hostScreenWidth +
                 '}';
     }
 }

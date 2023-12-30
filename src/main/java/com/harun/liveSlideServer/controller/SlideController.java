@@ -43,6 +43,7 @@ public class SlideController {
 
         slideService.setSessionCurrentFileName(sessionID, event.getFileName());
         slideService.setSessionPageCount(sessionID, event.getPageCount());
+        slideService.setSessionHostScreenWidth(sessionID, event.getHostScreenWidth());
         slideService.initializeCanvasEventLogs(sessionID);
         messagingTemplate.convertAndSend("/topic/fileUploaded/" + sessionID  , event);
     }

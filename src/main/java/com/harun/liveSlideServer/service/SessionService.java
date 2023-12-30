@@ -120,4 +120,13 @@ public class SessionService {
 
         return session.getCanvasEvents();
     }
+
+    public double getMeetingHostScreenWidth(String sessionID) {
+        Session session = database.sessions.get(sessionID);
+
+        if (session == null)
+            return -1;
+
+        return session.getHostScreenWidth();
+    }
 }
