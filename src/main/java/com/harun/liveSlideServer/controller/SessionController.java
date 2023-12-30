@@ -76,4 +76,16 @@ public class SessionController {
                         sessionService.getMeetingHostScreenWidth(sessionID)
                 ));
     }
+
+    @MessageMapping("/requestControl/{sessionID}/{userID}")
+    public void getRequestControl(@DestinationVariable String sessionID,
+                                             @DestinationVariable String userID, boolean isRequestControl) {
+        sessionService.changeUserControlRequest(sessionID,userID,isRequestControl);
+        messagingTemplate.convertAndSend("/topic/requestControl/" +
+                        sessionID
+                , new RequestControlEvent(
+                        userID,
+                        isRequestControl
+                ));
+    }
 }

@@ -32,7 +32,7 @@ public class SessionService {
         LocalDateTime creationTime = LocalDateTime.now();
         Session newSession = new Session(request.getSessionID(), creationTime);
         newSession.getParticipants().put(request.getUserID(),
-                new Participant(request.getUserID(), request.getHostName(), UserType.HOST_PRESENTER));
+                new Participant(request.getUserID(), request.getHostName(), UserType.HOST_PRESENTER, false));
         database.sessions.put(request.getSessionID(), newSession);
 
         return new SessionInitialResponse(request.getSessionID(), ResponseStatus.SUCCESS, SessionInitializeType.HOST, creationTime);
@@ -44,7 +44,7 @@ public class SessionService {
 
         Session session = database.sessions.get(request.getSessionID());
         session.getParticipants().put(request.getUserID(),
-                new Participant(request.getUserID(), request.getParticipantName(), UserType.PARTICIPANT_SPECTATOR));
+                new Participant(request.getUserID(), request.getParticipantName(), UserType.PARTICIPANT_SPECTATOR, false));
 
         return new SessionInitialResponse(request.getSessionID(), ResponseStatus.SUCCESS, SessionInitializeType.JOIN, session.getCreationTime());
     }
@@ -128,5 +128,13 @@ public class SessionService {
             return -1;
 
         return session.getHostScreenWidth();
+    }
+
+    public void changeUserControlRequest(String sessionID, String userID, boolean isRequestControl) {
+        Session session = database.sessions.get(sessionID);
+        if (session != null && session.getParticipants().containsKey(userID)) {
+            Participant participant = session.getParticipants().get(userID);
+            participant.setRequestingControl(isRequestControl);
+        }
     }
 }

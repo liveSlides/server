@@ -6,12 +6,13 @@ public class Participant {
     private String userID;
     private String name;
     private UserType userType;
+    private boolean isRequestingControl;
 
     public Participant() {
 
     }
 
-    public Participant(String userID, String name, UserType userType) {
+    public Participant(String userID, String name, UserType userType, boolean isRequestingControl) {
         this.userID = userID;
         this.name = name;
         this.userType = userType;
@@ -40,5 +41,13 @@ public class Participant {
 
     public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+
+    public boolean isRequestingControl() {
+        return isRequestingControl;
+    }
+
+    public void setRequestingControl(boolean requestingControl) {
+        isRequestingControl = requestingControl;
     }
 }
