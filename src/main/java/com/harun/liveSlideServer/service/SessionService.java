@@ -137,4 +137,25 @@ public class SessionService {
             participant.setRequestingControl(isRequestControl);
         }
     }
+
+    public void changePresenter(String sessionID, String userID) {
+        Session session = database.sessions.get(sessionID);
+        if (session != null && session.getParticipants().containsKey(userID)) {
+            for (Participant p : session.getParticipants().values()) {
+                if (p.getUserType() == UserType.HOST_PRESENTER && !p.getUserID().equals(userID)) {
+                    p.setUserType(UserType.HOST_SPECTATOR);
+                }
+                else if (p.getUserType() == UserType.PARTICIPANT_PRESENTER && !p.getUserID().equals(userID)) {
+                    p.setUserType(UserType.PARTICIPANT_SPECTATOR);
+                }
+                else if (p.getUserType() == UserType.HOST_SPECTATOR && p.getUserID().equals(userID)) {
+                    p.setUserType(UserType.HOST_PRESENTER);
+                }
+                else if (p.getUserType() == UserType.PARTICIPANT_SPECTATOR && p.getUserID().equals(userID)) {
+                    p.setUserType(UserType.PARTICIPANT_PRESENTER);
+                    p.setRequestingControl(false);
+                }
+            }
+        }
+    }
 }

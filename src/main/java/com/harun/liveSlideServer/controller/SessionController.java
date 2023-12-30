@@ -88,4 +88,20 @@ public class SessionController {
                         isRequestControl
                 ));
     }
+
+    @MessageMapping("/presenterChanged/{sessionID}")
+    public void presenterChanged(@DestinationVariable String sessionID,
+                                  String userID) {
+        System.out.println("presenterChanged/" + sessionID + "/" + userID);
+        sessionService.changePresenter(sessionID,userID);
+        messagingTemplate.convertAndSend("/topic/presenterChanged/" +
+                        sessionID
+                , new PresenterChangedEvent(userID));
+        messagingTemplate.convertAndSend("/topic/requestControl/" +
+                        sessionID
+                , new RequestControlEvent(
+                        userID,
+                        false
+                ));
+    }
 }
