@@ -34,6 +34,8 @@ public class SessionController {
     @SendTo("/topic/sessionStatus")
     public SessionInitialResponse joinSession(SessionJoinRequest request) {
         System.out.println(request);
+        messagingTemplate.convertAndSend("/topic/participantJoined/" + request.getSessionID() ,
+                new ParticipantJoinedEvent(request.getUserID(), request.getParticipantName()));
         return sessionService.joinSession(request);
     }
 
@@ -49,6 +51,8 @@ public class SessionController {
         System.out.println(request);
         DisconnectResponse response = sessionService.disconnect(request);
         messagingTemplate.convertAndSend("/topic/disconnect/" + request.getSessionID()  + "/" + request.getUserID(), response);
+        messagingTemplate.convertAndSend("/topic/participantDisconnected/" + request.getSessionID() ,
+                new ParticipantDisconnectedEvent(request.getUserID()));
     }
 
     @MessageMapping("/getMeetingSynchInformation/{sessionID}/{userID}")
