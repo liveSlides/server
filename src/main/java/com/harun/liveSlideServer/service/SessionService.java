@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class SessionService {
         if (database.sessions.containsKey(request.getSessionID()))
             return new SessionInitialResponse("", ResponseStatus.ERROR, SessionInitializeType.HOST, LocalDateTime.now());
 
-        LocalDateTime creationTime = LocalDateTime.now();
+        LocalDateTime creationTime = LocalDateTime.now(ZoneId.of("UTC"));
         Session newSession = new Session(request.getSessionID(), creationTime);
         newSession.getParticipants().put(request.getUserID(),
                 new Participant(request.getUserID(), request.getHostName(), UserType.HOST_PRESENTER, false));
