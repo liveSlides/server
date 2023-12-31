@@ -66,6 +66,7 @@ public class SessionController {
     @MessageMapping("/getMeetingInitialInformation/{sessionID}/{userID}")
     public void getMeetingInitialInformation(@DestinationVariable String sessionID,
                                            @DestinationVariable String userID) {
+        String presenterName = sessionService.getMeetingPresenterName(sessionID);
         messagingTemplate.convertAndSend("/topic/meetingInitialInformation/" +
                         sessionID  +
                         "/"
@@ -73,7 +74,8 @@ public class SessionController {
                 , new MeetingInitialInformationResponse(
                         sessionService.getMeetingFileName(sessionID),
                         sessionService.getMeetingCanvasEventLog(sessionID),
-                        sessionService.getMeetingHostScreenWidth(sessionID)
+                        sessionService.getMeetingHostScreenWidth(sessionID),
+                        presenterName
                 ));
     }
 
@@ -92,11 +94,10 @@ public class SessionController {
     @MessageMapping("/presenterChanged/{sessionID}")
     public void presenterChanged(@DestinationVariable String sessionID,
                                   String userID) {
-        System.out.println("presenterChanged/" + sessionID + "/" + userID);
-        sessionService.changePresenter(sessionID,userID);
+        String userName = sessionService.changePresenter(sessionID,userID);
         messagingTemplate.convertAndSend("/topic/presenterChanged/" +
                         sessionID
-                , new PresenterChangedEvent(userID));
+                , new PresenterChangedEvent(userID,userName));
         messagingTemplate.convertAndSend("/topic/requestControl/" +
                         sessionID
                 , new RequestControlEvent(

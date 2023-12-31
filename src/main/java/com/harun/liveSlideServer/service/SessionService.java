@@ -99,6 +99,7 @@ public class SessionService {
         response.setPenSize(session.getPenSize());
         response.setPenColor(session.getPenColor());
         response.setEraserSize(session.getEraserSize());
+        response.setPresenterName(getMeetingPresenterName(sessionID));
 
         return response;
     }
@@ -138,7 +139,8 @@ public class SessionService {
         }
     }
 
-    public void changePresenter(String sessionID, String userID) {
+    public String changePresenter(String sessionID, String userID) {
+        String userName = "";
         Session session = database.sessions.get(sessionID);
         if (session != null && session.getParticipants().containsKey(userID)) {
             for (Participant p : session.getParticipants().values()) {
@@ -150,12 +152,30 @@ public class SessionService {
                 }
                 else if (p.getUserType() == UserType.HOST_SPECTATOR && p.getUserID().equals(userID)) {
                     p.setUserType(UserType.HOST_PRESENTER);
+                    userName = p.getName();
                 }
                 else if (p.getUserType() == UserType.PARTICIPANT_SPECTATOR && p.getUserID().equals(userID)) {
                     p.setUserType(UserType.PARTICIPANT_PRESENTER);
                     p.setRequestingControl(false);
+                    userName = p.getName();
                 }
             }
         }
+
+        return userName;
+    }
+
+    public String getMeetingPresenterName(String sessionID) {
+        Session session = database.sessions.get(sessionID);
+
+        if (session != null) {
+            for (Participant p : session.getParticipants().values()) {
+                if (p.getUserType() == UserType.HOST_PRESENTER || p.getUserType() == UserType.PARTICIPANT_PRESENTER) {
+                    return p.getName();
+                }
+            }
+        }
+
+        return "";
     }
 }

@@ -17,17 +17,34 @@ public class MeetingSynchInformationResponse {
     private PenEraserSize penSize;
     private PenColor penColor;
     private PenEraserSize eraserSize;
+    private String presenterName;
 
     public MeetingSynchInformationResponse() {
 
     }
 
-    public MeetingSynchInformationResponse(String fileName, int index, int zoomRate, double hScrollValue, double vScrollValue) {
+    public MeetingSynchInformationResponse(String fileName,
+                                           int index,
+                                           int zoomRate,
+                                           double hScrollValue,
+                                           double vScrollValue,
+                                           int rotateRate,
+                                           PDFTool activeTool,
+                                           PenEraserSize penSize,
+                                           PenColor penColor,
+                                           PenEraserSize eraserSize,
+                                           String presenterName) {
         this.fileName = fileName;
         this.index = index;
         this.zoomRate = zoomRate;
         this.hScrollValue = hScrollValue;
         this.vScrollValue = vScrollValue;
+        this.rotateRate = rotateRate;
+        this.activeTool = activeTool;
+        this.penSize = penSize;
+        this.penColor = penColor;
+        this.eraserSize = eraserSize;
+        this.presenterName = presenterName;
     }
 
     public String getFileName() {
@@ -110,22 +127,30 @@ public class MeetingSynchInformationResponse {
         this.eraserSize = eraserSize;
     }
 
+    public String getPresenterName() {
+        return presenterName;
+    }
+
+    public void setPresenterName(String presenterName) {
+        this.presenterName = presenterName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MeetingSynchInformationResponse response = (MeetingSynchInformationResponse) o;
-        return index == response.index && zoomRate == response.zoomRate && Double.compare(hScrollValue, response.hScrollValue) == 0 && Double.compare(vScrollValue, response.vScrollValue) == 0 && rotateRate == response.rotateRate && Objects.equals(fileName, response.fileName) && activeTool == response.activeTool && penSize == response.penSize && penColor == response.penColor && eraserSize == response.eraserSize;
+        MeetingSynchInformationResponse that = (MeetingSynchInformationResponse) o;
+        return index == that.index && zoomRate == that.zoomRate && Double.compare(hScrollValue, that.hScrollValue) == 0 && Double.compare(vScrollValue, that.vScrollValue) == 0 && rotateRate == that.rotateRate && Objects.equals(fileName, that.fileName) && activeTool == that.activeTool && penSize == that.penSize && penColor == that.penColor && eraserSize == that.eraserSize && Objects.equals(presenterName, that.presenterName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fileName, index, zoomRate, hScrollValue, vScrollValue, rotateRate, activeTool, penSize, penColor, eraserSize);
+        return Objects.hash(fileName, index, zoomRate, hScrollValue, vScrollValue, rotateRate, activeTool, penSize, penColor, eraserSize, presenterName);
     }
 
     @Override
     public String toString() {
-        return "MeetingInitialInformationResponse{" +
+        return "MeetingSynchInformationResponse{" +
                 "fileName='" + fileName + '\'' +
                 ", index=" + index +
                 ", zoomRate=" + zoomRate +
@@ -136,6 +161,7 @@ public class MeetingSynchInformationResponse {
                 ", penSize=" + penSize +
                 ", penColor=" + penColor +
                 ", eraserSize=" + eraserSize +
+                ", presenterName='" + presenterName + '\'' +
                 '}';
     }
 }

@@ -10,16 +10,18 @@ public class MeetingInitialInformationResponse {
     private String fileName;
     private LinkedList<CanvasEventLog>[] canvasEvents;
     private double hostScreenWidth;
+    private String presenterUserName;
 
 
     public MeetingInitialInformationResponse() {
 
     }
 
-    public MeetingInitialInformationResponse(String fileName , LinkedList<CanvasEventLog>[] canvasEvents, double hostScreenWidth) {
+    public MeetingInitialInformationResponse(String fileName , LinkedList<CanvasEventLog>[] canvasEvents, double hostScreenWidth, String presenterUserName) {
         this.fileName = fileName;
         this.canvasEvents = canvasEvents;
         this.hostScreenWidth = hostScreenWidth;
+        this.presenterUserName = presenterUserName;
     }
 
     public String getFileName() {
@@ -46,17 +48,25 @@ public class MeetingInitialInformationResponse {
         this.hostScreenWidth = hostScreenWidth;
     }
 
+    public String getPresenterUserName() {
+        return presenterUserName;
+    }
+
+    public void setPresenterUserName(String presenterUserName) {
+        this.presenterUserName = presenterUserName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MeetingInitialInformationResponse that = (MeetingInitialInformationResponse) o;
-        return Double.compare(hostScreenWidth, that.hostScreenWidth) == 0 && Objects.equals(fileName, that.fileName) && Arrays.equals(canvasEvents, that.canvasEvents);
+        return Double.compare(hostScreenWidth, that.hostScreenWidth) == 0 && Objects.equals(fileName, that.fileName) && Arrays.equals(canvasEvents, that.canvasEvents) && Objects.equals(presenterUserName, that.presenterUserName);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(fileName, hostScreenWidth);
+        int result = Objects.hash(fileName, hostScreenWidth, presenterUserName);
         result = 31 * result + Arrays.hashCode(canvasEvents);
         return result;
     }
@@ -67,6 +77,7 @@ public class MeetingInitialInformationResponse {
                 "fileName='" + fileName + '\'' +
                 ", canvasEvents=" + Arrays.toString(canvasEvents) +
                 ", hostScreenWidth=" + hostScreenWidth +
+                ", presenterUserName='" + presenterUserName + '\'' +
                 '}';
     }
 }
