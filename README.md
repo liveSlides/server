@@ -21,14 +21,14 @@
 
 ## Introduction
 
-Classroom presenter is a real-time synchronized presentation application. Participant's client is synchronized presenter's client in real time . Whatever presenter do , participant can see on their clients as well. The type of data which sending/receiving are not video like Teams or Zoom but primitive data.
+LiveSlide is a real-time synchronized presentation application. Participant's client is synchronized presenter's client in real time . Whatever presenter do , participant can see on their clients as well. The type of data which sending/receiving are not video like Teams or Zoom but primitive data.
 
 <br>
 
 ## Navigation
 
-Backend :<br/>
-Frontend :<br/>
+Server : https://github.com/liveSlides/server <br/>
+Client : https://github.com/liveSlides/client <br/>
 <br>
 
 ## Screenshots
